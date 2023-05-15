@@ -4,7 +4,7 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 
-public class Authenticator {
+public class Security {
     public boolean authenticateToken(String token) {
         LocalDateTime currentDateTime = LocalDateTime.now();
         try {
@@ -19,4 +19,9 @@ public class Authenticator {
     public boolean authenticateUser(String username, String password) {
         return true;
     }
+
+    public String createToken() {
+        return LocalDateTime.now().toString();
+    }
+
 }

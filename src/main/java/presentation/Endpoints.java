@@ -14,14 +14,12 @@ public class Endpoints {
         Distributer disty = new Distributer();
 
         //register new user
-        app.post("/user", (ctx) -> {
-            String response = disty.registerNewUser(ctx.body());
-            ctx.json(response);
-        });
+        app.post("/user", disty::registerNewUser);
 
         //get access token
         app.post("/token", (ctx) -> {
-
+            System.out.println(ctx.body());
+            disty.login(ctx);
         });
 
         //search product
@@ -30,9 +28,7 @@ public class Endpoints {
         });
 
         //create new listing
-        app.post("/product", (ctx) -> {
-
-        });
+        app.post("/product", disty::addNewProduct);
 
         //fetch all orders
         app.get("/orders", (ctx) -> {
