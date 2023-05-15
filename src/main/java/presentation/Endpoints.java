@@ -1,6 +1,5 @@
 package presentation;
 
-import application.Distributer;
 import io.javalin.Javalin;
 import io.javalin.plugin.bundled.CorsPluginConfig;
 
@@ -27,6 +26,9 @@ public class Endpoints {
 
         });
 
+        //subscribe to product type
+        app.post("/product/subscribe/{ProductType}", disty::subscribeToProductType);
+
         //create new listing
         app.post("/product", disty::addNewProduct);
 
@@ -47,9 +49,12 @@ public class Endpoints {
 
         });
 
-        //get messages from user id
-        app.get("messages/{id}", (ctx) -> {
+        //get messages from username
+        app.get("/messages", disty::getMessages);
 
+        //get unsent messages from username
+        app.get("/messages/unsent", (ctx) -> {
+            disty.checkForUnsentMessages(ctx);
         });
     }
 }

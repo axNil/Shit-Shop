@@ -1,4 +1,4 @@
-package application.beans;
+package enums;
 
 public enum ProductType {
     LAPTOP,
@@ -6,5 +6,5 @@ public enum ProductType {
     ROBOT,
     STEEL,
     CHEESE,
-    OTHER
+    OTHER;
 }

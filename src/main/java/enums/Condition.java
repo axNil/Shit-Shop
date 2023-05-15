@@ -1,4 +1,4 @@
-package application.beans;
+package enums;
 
 public enum Condition {
     NEW,
