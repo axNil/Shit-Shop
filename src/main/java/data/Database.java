@@ -1,6 +1,6 @@
 package data;
 
-import application.Observer;
+import application.ProductTypeSubscriber;
 import beans.Product;
 import beans.User;
 import enums.ProductType;
@@ -22,7 +22,7 @@ public class Database {
     private ConcurrentHashMap<String, String> connectedUsers;
 
     //productType, observer(user)
-    private ConcurrentHashMap<ProductType, LinkedList<Observer>> wishlistSubscriptions;
+    private ConcurrentHashMap<ProductType, LinkedList<ProductTypeSubscriber>> wishlistSubscriptions;
 
     //productID, product
     private ConcurrentHashMap<Integer, Product> products;
@@ -103,16 +103,12 @@ public class Database {
         return productIDs.getAndIncrement();
     }
 
-
     public void addProduct(Product product) {
         products.put(product.getProductID(), product);
         writeProductID();
-        sendToSubscribers(product);
     }
 
-    private void sendToSubscribers(Product product) {
-        LinkedList<Observer> subscribers = wishlistSubscriptions.get(product.getProductType());
-        for (Observer o : subscribers)
-            o.update(product);
+    public LinkedList<ProductTypeSubscriber> getSubscribers(ProductType productType) {
+        return wishlistSubscriptions.get(productType);
     }
 }

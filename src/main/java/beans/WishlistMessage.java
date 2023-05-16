@@ -1,10 +1,9 @@
 package beans;
 
-public class WishlistMessage extends Message{
-    private Product product;
+import enums.ProductType;
 
-    public WishlistMessage(Product product) {
-        super(String.format("New products have been added in the %s category.", product.getProductType().toString()));
-        this.product = product;
+public class WishlistMessage extends Message {
+    public WishlistMessage(ProductType productType) {
+        super(String.format("New products have been added in the %s category.", productType.toString()));
     }
 }

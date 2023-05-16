@@ -1,13 +1,14 @@
 package beans;
 
-import application.Observer;
+import application.ProductTypeSubscriber;
+import enums.ProductType;
 
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class User implements Observer {
+public class User implements ProductTypeSubscriber {
     private String firstName;
     private String lastName;
     private String dob;
@@ -25,7 +26,8 @@ public class User implements Observer {
         this.email = email;
         this.username = username;
         this.password = password;
-        this.inbox =  new LinkedList<Message>();
+        this.inbox = new LinkedList<>();
+        hasUnsentMessages = new AtomicBoolean();
         sem = new Semaphore(1);
     }
 
@@ -37,7 +39,7 @@ public class User implements Observer {
         }
         List<Message> mess = inbox;
         sem.release();
-        return inbox;
+        return mess;
     }
 
     public String getFirstName() {
@@ -89,13 +91,13 @@ public class User implements Observer {
     }
 
     @Override
-    public void update(Product product) {
+    public void update(ProductType productType) {
         try {
             sem.acquire();
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        inbox.add(new WishlistMessage(product));
+        inbox.add(new WishlistMessage(productType));
         hasUnsentMessages.set(true);
         sem.release();
     }

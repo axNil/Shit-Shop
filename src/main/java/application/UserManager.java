@@ -37,7 +37,7 @@ public class UserManager {
 
     public List<Message> getMessages(String username) {
         User user = database.getUser(username);
-        user.setHasUnsentMessages(true);
+        user.setHasUnsentMessages(false);
         return database.getUser(username).getInbox();
     }
 

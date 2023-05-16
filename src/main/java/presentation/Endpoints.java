@@ -16,12 +16,9 @@ public class Endpoints {
         app.post("/user", disty::registerNewUser);
 
         //get access token
-        app.post("/token", (ctx) -> {
-            System.out.println(ctx.body());
-            disty.login(ctx);
-        });
+        app.post("/token", disty::login);
 
-        //search product
+        //TODO: search product
         app.get("/product", (ctx) -> {
 
         });
@@ -32,19 +29,19 @@ public class Endpoints {
         //create new listing
         app.post("/product", disty::addNewProduct);
 
-        //fetch all orders
+        //TODO: fetch all orders
         app.get("/orders", (ctx) -> {
 
         });
 
-        //Get a specific order maybe?
+        //TODO:Get a specific order maybe?
 
-        //create new order
+        //TODO: create new order
         app.post("/order", (ctx) -> {
 
         });
 
-        //approve/decline order
+        //TODO: approve/decline order
         app.patch("/order", (ctx) -> {
 
         });
@@ -53,8 +50,6 @@ public class Endpoints {
         app.get("/messages", disty::getMessages);
 
         //get unsent messages from username
-        app.get("/messages/unsent", (ctx) -> {
-            disty.checkForUnsentMessages(ctx);
-        });
+        app.get("/messages/unsent", disty::checkForUnsentMessages);
     }
 }

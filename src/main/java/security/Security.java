@@ -9,9 +9,11 @@ import java.time.format.DateTimeParseException;
 
 public class Security {
     private Database database;
+
     public Security(Database db) {
         database = db;
     }
+
     public boolean authenticateToken(String token) {
         LocalDateTime currentDateTime = LocalDateTime.now();
         try {
@@ -22,7 +24,6 @@ public class Security {
             return false;
         }
     }
-
 
     public String authenticateUser(Loginbean user) {
         if (database.getPassword(user.getUsername()).equals(user.getPassword())) {

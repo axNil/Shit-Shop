@@ -39,7 +39,7 @@ public class Distributer {
         if (response.equals("OK"))
             ctx.status(201).json(createToken(user.getUsername()));
         else
-            ctx.status(400).json(response);
+            ctx.status(400).json(createErrorMessage(response));
     }
 
     public void login(Context ctx) {
