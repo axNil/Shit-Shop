@@ -1,24 +1,22 @@
-package application.filter;
+package filter;
 
 import beans.Product;
-import enums.Condition;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ConditionMinCriteria implements FilterCriteria {
-    private Condition condition;
-    public ConditionMinCriteria(Condition condition){
-        this.condition = condition;
+public class PriceMaxCriteria implements FilterCriteria {
+    private final double maxPrice;
+    public PriceMaxCriteria(double maxPrice) {
+        this.maxPrice = maxPrice;
     }
     @Override
     public List<Product> meetCriteria(List<Product> products) {
         List<Product> list = new ArrayList<>();
         for (Product p : products) {
-            if (p.getCondition().getValue() >= condition.getValue())
+            if (p.getPrice() <= maxPrice)
                 list.add(p);
         }
         return list;
     }
 }
-

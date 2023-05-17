@@ -29,9 +29,6 @@ public class Database {
     //productID, product
     private ConcurrentHashMap<Integer, Product> products;
 
-
-
-
     public Database() {
         initProductID();
         users = new ConcurrentHashMap<>();
@@ -88,8 +85,8 @@ public class Database {
     }
 
     private void fill() {
-        products.put(1000, new Product(ProductType.CHEESE, "Flens", 24, "2023", Color.UNSPECIFIED, Condition.DEFECT, "Viktor", 1000));
-        products.put(1001, new Product(ProductType.LAPTOP, "Flenky", 10, "2023", Color.UNSPECIFIED, Condition.DEFECT, "Viktor", 1001));
+        products.put(1000, new Product(ProductType.CHEESE, "Flens", 24, 2023, Color.UNSPECIFIED, Condition.DEFECT, "Viktor", 1000));
+        products.put(1001, new Product(ProductType.LAPTOP, "Flenky", 10, 2023, Color.UNSPECIFIED, Condition.DEFECT, "Viktor", 1001));
         users.put("admin", new User("admin", "admin", "2023-05-12", "admin@shitshop.com", "admin", "admin"));
     }
 

@@ -1,8 +1,7 @@
 package application;
 
-import application.filter.FilterCriteria;
+import filter.FilterCriteria;
 import beans.Product;
-import beans.SearchBean;
 import data.Database;
 import enums.ProductType;
 

@@ -1,4 +1,4 @@
-package application.filter;
+package filter;
 
 import beans.Product;
 

@@ -9,7 +9,8 @@ public class SearchBean {
     public double priceMin = -1;
     public double priceMax = -1;
     public String name;
-    public String yearOfProduction;
+    public int yearOfProductionMin = -1;
+    public int yearOfProductionMax = -1;
     public Color color;
     public Condition conditionMin;
     public Condition conditionMax;

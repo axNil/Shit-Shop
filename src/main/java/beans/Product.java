@@ -8,14 +8,14 @@ public class Product {
     private ProductType productType;
     private String name;
     private double price;
-    private String yearOfProduction;
+    private int yearOfProduction;
     private Color color;
     private Condition condition;
     private String seller;
     private int productID;
     private boolean isSold;
 
-    public Product(ProductType productType, String name, double price, String yearOfProduction, Color color, Condition condition, String seller, int productID) {
+    public Product(ProductType productType, String name, double price, int yearOfProduction, Color color, Condition condition, String seller, int productID) {
         this.productType = productType;
         this.name = name;
         this.price = price;
@@ -58,11 +58,11 @@ public class Product {
         this.price = price;
     }
 
-    public String getYearOfProduction() {
+    public int getYearOfProduction() {
         return yearOfProduction;
     }
 
-    public void setYearOfProduction(String yearOfProduction) {
+    public void setYearOfProduction(int yearOfProduction) {
         this.yearOfProduction = yearOfProduction;
     }
 

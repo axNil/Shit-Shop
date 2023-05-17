@@ -1,21 +1,21 @@
-package application.filter;
+package filter;
 
 import beans.Product;
-import enums.Condition;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ConditionMaxCriteria implements FilterCriteria {
-    private Condition condition;
-    public ConditionMaxCriteria(Condition condition){
-        this.condition = condition;
+public class YOPMaxCriteria implements FilterCriteria {
+    private int maxYOP;
+    public YOPMaxCriteria(int maxYearOfProduction) {
+        maxYOP = maxYearOfProduction;
     }
+
     @Override
     public List<Product> meetCriteria(List<Product> products) {
         List<Product> list = new ArrayList<>();
         for (Product p : products) {
-            if (p.getCondition().getValue() <= condition.getValue())
+            if (p.getYearOfProduction() <= maxYOP)
                 list.add(p);
         }
         return list;

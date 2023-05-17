@@ -1,6 +1,6 @@
 package application;
 
-import application.filter.FilterCriteria;
+import filter.FilterCriteria;
 import beans.Product;
 
 import java.util.List;

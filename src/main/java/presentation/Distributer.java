@@ -2,23 +2,16 @@ package presentation;
 
 import application.ProductManager;
 import application.UserManager;
-import application.filter.FilterCriteria;
+import filter.FilterCriteria;
 import beans.*;
 import com.google.gson.Gson;
-import com.google.gson.stream.JsonReader;
 import data.Database;
 import enums.ProductType;
 import io.javalin.http.Context;
-import org.jetbrains.annotations.NotNull;
 import security.Security;
 
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.sql.SQLOutput;
 import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.Callable;
 
 public class Distributer {
     private Gson gson;
@@ -137,10 +130,12 @@ public class Distributer {
 
     public void searchProducts(Context ctx) {
         SearchBean sb = gson.fromJson(ctx.body(), SearchBean.class);
-        System.out.println(sb.priceMin);
+
+        //create filtercriterias based on json message from client
         List<FilterCriteria> criterias = CriteriaMapper.fromJSON(sb);
+
+        //filter products based on criterias
         List<Product> result = productManager.productSearch(criterias);
-        System.out.println(result.size());
 
         ctx.status(200).json(result);
     }
