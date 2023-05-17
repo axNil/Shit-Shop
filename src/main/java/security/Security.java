@@ -2,6 +2,7 @@ package security;
 
 import beans.Loginbean;
 import data.DBI;
+import io.javalin.http.Context;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -14,7 +15,7 @@ public class Security {
         DBI = db;
     }
 
-    public boolean authenticateToken(String token) {
+    public static boolean authenticateToken(String token) {
         LocalDateTime currentDateTime = LocalDateTime.now();
         try {
             LocalDateTime receivedTime = LocalDateTime.parse(token.split(" ")[1]);
@@ -23,6 +24,10 @@ public class Security {
         } catch (DateTimeParseException e) {
             return false;
         }
+    }
+
+    public static String extractUsernameFromToken(Context ctx) {
+        return ctx.header("auth_token").split(" ")[0];
     }
 
     public String authenticateUser(Loginbean user) {

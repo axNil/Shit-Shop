@@ -2,14 +2,15 @@ package application;
 
 import beans.Loginbean;
 import beans.Message;
+import beans.Product;
 import beans.User;
 import enums.ProductType;
 import data.DBI;
 
 import java.util.List;
 
-public class UserManager {
-    private DBI DBI;
+public class UserManager implements ProductListener {
+    private final DBI DBI;
     public UserManager(DBI db) {
         DBI = db;
     }
@@ -44,5 +45,13 @@ public class UserManager {
     public boolean checkForUnsentMessages(String username) {
         return DBI.getUser(username).hasUnsentMessages();
 
+    }
+
+    @Override
+    public void onAdd(Product newProduct) {
+        // TODO: Implement
+        // User[] users = DBI.getSubscribedUsers(productType);
+        // for (User u in users)
+        //  u.inbox.add(new WishlistMessage("New products you subcribed on!"));
     }
 }

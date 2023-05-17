@@ -9,14 +9,11 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class ProductManager {
-    private DBI DBI;
-    private SearchUtils searchUtils;
+    private final DBI DBI;
 
-    public ProductManager(DBI db) {
+    protected ProductManager(DBI db) {
         DBI = db;
-        searchUtils = new SearchUtils();
     }
-
 
     public void addNewProduct(Product product) {
         product.setProductID(DBI.getProductID());
@@ -26,7 +23,7 @@ public class ProductManager {
     
     public List<Product> productSearch(List<FilterCriteria> criterias) {
         List<Product> products = DBI.getProducts();
-        return searchUtils.search(products, criterias);
+        return SearchUtils.search(products, criterias);
     }
 
     private void notifySubscribersAsync(ProductType productType) {

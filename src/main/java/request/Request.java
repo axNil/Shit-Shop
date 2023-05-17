@@ -3,7 +3,8 @@ package request;
 import io.javalin.http.Context;
 
 public abstract class Request {
-    public void doHandle(Context ctx) {
+    // TODO: Add logging? Singleton? ;)
+    public final void doHandle(Context ctx) {
         if (auth(ctx)) {
             handle(ctx);
         }

@@ -50,6 +50,12 @@ public class DBI {
         return false;
     }
 
+    public boolean addOrder(String username, int productID) {
+        // SQL BOY
+        // username ok, productID ok, order is unique...
+        return true;
+    }
+
     public void addSubscriber(ProductType pt, String username) {
         User user = users.get(username);
         if (wishlistSubscriptions.containsKey(pt)) {
