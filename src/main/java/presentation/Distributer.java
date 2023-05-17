@@ -2,19 +2,23 @@ package presentation;
 
 import application.ProductManager;
 import application.UserManager;
-import beans.Loginbean;
-import beans.Message;
-import beans.Product;
-import beans.User;
+import application.filter.FilterCriteria;
+import beans.*;
 import com.google.gson.Gson;
+import com.google.gson.stream.JsonReader;
 import data.Database;
 import enums.ProductType;
 import io.javalin.http.Context;
+import org.jetbrains.annotations.NotNull;
 import security.Security;
 
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.sql.SQLOutput;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Objects;
+import java.util.concurrent.Callable;
 
 public class Distributer {
     private Gson gson;
@@ -61,6 +65,9 @@ public class Distributer {
         }
 
         Product product = gson.fromJson(ctx.body(), Product.class);
+        System.out.println(product.getProductType());
+        System.out.println(product.getPrice());
+        System.out.println(product.getCondition());
         productManager.addNewProduct(product);
         ctx.status(201);
     }
@@ -128,4 +135,13 @@ public class Distributer {
     }
 
 
+    public void searchProducts(Context ctx) {
+        SearchBean sb = gson.fromJson(ctx.body(), SearchBean.class);
+        System.out.println(sb.priceMin);
+        List<FilterCriteria> criterias = CriteriaMapper.fromJSON(sb);
+        List<Product> result = productManager.productSearch(criterias);
+        System.out.println(result.size());
+
+        ctx.status(200).json(result);
+    }
 }

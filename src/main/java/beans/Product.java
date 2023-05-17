@@ -13,6 +13,7 @@ public class Product {
     private Condition condition;
     private String seller;
     private int productID;
+    private boolean isSold;
 
     public Product(ProductType productType, String name, double price, String yearOfProduction, Color color, Condition condition, String seller, int productID) {
         this.productType = productType;
@@ -23,6 +24,14 @@ public class Product {
         this.condition = condition;
         this.seller = seller;
         this.productID = productID;
+    }
+
+    public boolean isSold() {
+        return isSold;
+    }
+
+    public void setSold(boolean sold) {
+        isSold = sold;
     }
 
     public ProductType getProductType() {

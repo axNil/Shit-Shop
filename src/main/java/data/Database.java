@@ -3,6 +3,8 @@ package data;
 import application.ProductTypeSubscriber;
 import beans.Product;
 import beans.User;
+import enums.Color;
+import enums.Condition;
 import enums.ProductType;
 
 import java.io.*;
@@ -35,6 +37,7 @@ public class Database {
         users = new ConcurrentHashMap<>();
         connectedUsers = new ConcurrentHashMap<>();
         wishlistSubscriptions = new ConcurrentHashMap<>();
+        products = new ConcurrentHashMap<>();
 
         fill();
     }
@@ -63,6 +66,14 @@ public class Database {
         return users.get(username).getPassword();
     }
 
+    public List<Product> getProducts() {
+        return products.values().stream().toList();
+    }
+
+    public void setProducts(ConcurrentHashMap<Integer, Product> products) {
+        this.products = products;
+    }
+
     public boolean addToConnectedUsers(String user, String token) {
         connectedUsers.put(user, token);
         return true;
@@ -77,7 +88,8 @@ public class Database {
     }
 
     private void fill() {
-
+        products.put(1000, new Product(ProductType.CHEESE, "Flens", 24, "2023", Color.UNSPECIFIED, Condition.DEFECT, "Viktor", 1000));
+        products.put(1001, new Product(ProductType.LAPTOP, "Flenky", 10, "2023", Color.UNSPECIFIED, Condition.DEFECT, "Viktor", 1001));
         users.put("admin", new User("admin", "admin", "2023-05-12", "admin@shitshop.com", "admin", "admin"));
     }
 

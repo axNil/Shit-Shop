@@ -19,9 +19,7 @@ public class Endpoints {
         app.post("/token", disty::login);
 
         //TODO: search product
-        app.get("/product", (ctx) -> {
-
-        });
+        app.get("/product", disty::searchProducts);
 
         //subscribe to product type
         app.post("/product/subscribe/{ProductType}", disty::subscribeToProductType);
