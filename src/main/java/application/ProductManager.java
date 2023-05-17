@@ -2,36 +2,36 @@ package application;
 
 import filter.FilterCriteria;
 import beans.Product;
-import data.Database;
+import data.DBI;
 import enums.ProductType;
 
 import java.util.LinkedList;
 import java.util.List;
 
 public class ProductManager {
-    private Database database;
+    private DBI DBI;
     private SearchUtils searchUtils;
 
-    public ProductManager(Database db) {
-        database = db;
+    public ProductManager(DBI db) {
+        DBI = db;
         searchUtils = new SearchUtils();
     }
 
 
     public void addNewProduct(Product product) {
-        product.setProductID(database.getProductID());
-        database.addProduct(product);
+        product.setProductID(DBI.getProductID());
+        DBI.addProduct(product);
         notifySubscribersAsync(product.getProductType());
     }
     
     public List<Product> productSearch(List<FilterCriteria> criterias) {
-        List<Product> products = database.getProducts();
+        List<Product> products = DBI.getProducts();
         return searchUtils.search(products, criterias);
     }
 
     private void notifySubscribersAsync(ProductType productType) {
         new Thread(()-> {
-            LinkedList<ProductTypeSubscriber> subscribers = database.getSubscribers(productType);
+            LinkedList<ProductTypeSubscriber> subscribers = DBI.getSubscribers(productType);
             if (subscribers != null) {
                 for (ProductTypeSubscriber o : subscribers)
                     o.update(productType);

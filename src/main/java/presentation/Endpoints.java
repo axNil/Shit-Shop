@@ -2,6 +2,7 @@ package presentation;
 
 import io.javalin.Javalin;
 import io.javalin.plugin.bundled.CorsPluginConfig;
+import request.AddProductRequest;
 
 public class Endpoints {
     public static void main(String[] args) {
@@ -25,10 +26,13 @@ public class Endpoints {
         app.post("/product/subscribe/{ProductType}", disty::subscribeToProductType);
 
         //create new listing
-        app.post("/product", disty::addNewProduct);
+        //app.post("/product", disty::addNewProduct);
+        app.post("/product", (ctx) -> {
+            new AddProductRequest().doHandle(ctx);
+        });
 
         //TODO: fetch all orders
-        app.get("/orders", (ctx) -> {
+        app.get("/order", (ctx) -> {
 
         });
 
@@ -45,9 +49,9 @@ public class Endpoints {
         });
 
         //get messages from username
-        app.get("/messages", disty::getMessages);
+        app.get("/message", disty::getMessages);
 
         //get unsent messages from username
-        app.get("/messages/unsent", disty::checkForUnsentMessages);
+        app.get("/message/unsent", disty::checkForUnsentMessages);
     }
 }

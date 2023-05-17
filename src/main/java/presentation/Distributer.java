@@ -5,7 +5,7 @@ import application.UserManager;
 import filter.FilterCriteria;
 import beans.*;
 import com.google.gson.Gson;
-import data.Database;
+import data.DBI;
 import enums.ProductType;
 import io.javalin.http.Context;
 import security.Security;
@@ -22,10 +22,10 @@ public class Distributer {
 
     public Distributer() {
         gson = new Gson();
-        Database database = new Database();
-        security = new Security(database);
-        productManager = new ProductManager(database);
-        userManager = new UserManager(database);
+        DBI DBI = new DBI();
+        security = new Security(DBI);
+        productManager = new ProductManager(DBI);
+        userManager = new UserManager(DBI);
     }
     public void registerNewUser(Context ctx) {
         System.out.println("create new user");

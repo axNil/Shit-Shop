@@ -4,45 +4,45 @@ import beans.Loginbean;
 import beans.Message;
 import beans.User;
 import enums.ProductType;
-import data.Database;
+import data.DBI;
 
 import java.util.List;
 
 public class UserManager {
-    private Database database;
-    public UserManager(Database db) {
-        database = db;
+    private DBI DBI;
+    public UserManager(DBI db) {
+        DBI = db;
     }
     public String addUser(User user) {
         //check validity
-        if (database.checkIfEmailExist(user.getEmail())) {
+        if (DBI.checkIfEmailExist(user.getEmail())) {
             return "Email already exists";
         }
 
-        if (database.checkIfUsernameExist(user.getUsername())) {
+        if (DBI.checkIfUsernameExist(user.getUsername())) {
             return "Username already exists";
         }
 
-        database.addUser(user.getUsername(), user);
+        DBI.addUser(user.getUsername(), user);
         return "OK";
     }
 
     public void addToConnectedUsers(Loginbean user, String token) {
-        database.addToConnectedUsers(user.getUsername(), token);
+        DBI.addToConnectedUsers(user.getUsername(), token);
     }
 
     public void subscribeToProductType(ProductType pt, String username) {
-        database.addSubscriber(pt, username);
+        DBI.addSubscriber(pt, username);
     }
 
     public List<Message> getMessages(String username) {
-        User user = database.getUser(username);
+        User user = DBI.getUser(username);
         user.setHasUnsentMessages(false);
-        return database.getUser(username).getInbox();
+        return DBI.getUser(username).getInbox();
     }
 
     public boolean checkForUnsentMessages(String username) {
-        return database.getUser(username).hasUnsentMessages();
+        return DBI.getUser(username).hasUnsentMessages();
 
     }
 }

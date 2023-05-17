@@ -14,7 +14,7 @@ import java.util.Scanner;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class Database {
+public class DBI {
     private AtomicInteger productIDs;
 
     //Username, user
@@ -29,7 +29,7 @@ public class Database {
     //productID, product
     private ConcurrentHashMap<Integer, Product> products;
 
-    public Database() {
+    public DBI() {
         initProductID();
         users = new ConcurrentHashMap<>();
         connectedUsers = new ConcurrentHashMap<>();

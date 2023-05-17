@@ -1,17 +1,17 @@
 package security;
 
 import beans.Loginbean;
-import data.Database;
+import data.DBI;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 
 public class Security {
-    private Database database;
+    private DBI DBI;
 
-    public Security(Database db) {
-        database = db;
+    public Security(DBI db) {
+        DBI = db;
     }
 
     public boolean authenticateToken(String token) {
@@ -26,7 +26,7 @@ public class Security {
     }
 
     public String authenticateUser(Loginbean user) {
-        if (database.getPassword(user.getUsername()).equals(user.getPassword())) {
+        if (DBI.getPassword(user.getUsername()).equals(user.getPassword())) {
             return createToken(user.getUsername());
         } else {
             return "Not valid";
