@@ -14,6 +14,7 @@ public class Product {
     private String seller;
     private int productID;
     private boolean isSold;
+    private String imageUrl;
 
     public Product(ProductType productType, String name, double price, int yearOfProduction, Color color, Condition condition, String seller, int productID) {
         this.productType = productType;
