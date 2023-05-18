@@ -10,7 +10,7 @@ import presentation.CriteriaMapper;
 
 import java.util.List;
 
-public class SearchRequest extends SafeRequest {
+public class SearchRequest extends UnsafeRequest {
     @Override
     protected void handle(Context ctx) {
         SearchBean sb = new Gson().fromJson(ctx.body(), SearchBean.class);
