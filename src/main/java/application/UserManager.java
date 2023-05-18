@@ -2,11 +2,11 @@ package application;
 
 import application.listener.ProductListener;
 import beans.*;
+import beans.message.Message;
 import enums.ProductType;
 import data.DBI;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class UserManager implements ProductListener {
     private final DBI DBI;

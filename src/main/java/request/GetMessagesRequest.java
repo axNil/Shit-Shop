@@ -1,7 +1,7 @@
 package request;
 
 import application.Distributer;
-import beans.Message;
+import beans.message.Message;
 import io.javalin.http.Context;
 
 import java.util.List;

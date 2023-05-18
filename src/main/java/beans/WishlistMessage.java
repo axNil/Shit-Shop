@@ -1,5 +1,6 @@
 package beans;
 
+import beans.message.Message;
 import enums.ProductType;
 
 public class WishlistMessage extends Message {

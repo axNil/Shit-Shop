@@ -33,26 +33,28 @@ public class Endpoints {
         });
 
         //create new listing
-        //app.post("/product", disty::addNewProduct);
         app.post("/product", (ctx) -> {
             new AddProductRequest().doHandle(ctx);
         });
 
-        //TODO: fetch all orders
+        //fetch my orders // shows orders i've placed, AKA. order history
         app.get("/order", (ctx) -> {
+            new OrderHistoryRequest().doHandle(ctx);
+        });
 
+        // /order/{product_id}     // shows orders for a specific listing
+        app.get("/order/{product_id}", (ctx) -> {
+            new PendingOrdersRequest().doHandle(ctx);
         });
 
         //TODO:Get a specific order maybe?
 
-        //TODO: create new order
         app.post("/order", (ctx) -> {
             new PlaceOrderRequest().doHandle(ctx);
         });
 
-        //TODO: approve/decline order
         app.patch("/order", (ctx) -> {
-
+            new ProcessOrderRequest().doHandle(ctx);
         });
 
         //get messages from username

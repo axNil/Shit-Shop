@@ -1,6 +1,6 @@
 package data;
 
-import beans.Message;
+import beans.message.Message;
 import beans.Order;
 import beans.Product;
 import beans.User;
@@ -30,9 +30,20 @@ public class DBI {
         return false;
     }
 
-    public boolean addOrder(String username, int productID) {
-        Order order = db.placeOrder(username, productID);
-        return order != null;
+    public Order addOrder(String username, int productID) {
+        return db.placeOrder(username, productID);
+    }
+
+    public ArrayList<Order> getOrders(int productID) {
+        return db.selectProductsOrders(productID);
+    }
+
+    public ArrayList<Order> getOrders(String buyer) {
+        return db.selectOrders(buyer);
+    }
+
+    public String getSeller(int productID) {
+        return db.getSeller(productID);
     }
 
     public void addSubscriber(ProductType pt, String username) {

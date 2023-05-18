@@ -1,6 +1,7 @@
 package data;
 
 import beans.*;
+import beans.message.Message;
 import enums.Color;
 import enums.Condition;
 import enums.ProductType;
@@ -58,7 +59,7 @@ public class Database {
         return orders;
     }
 
-    public Collection<Order> selectProductsOrders(int product_id) {
+    public ArrayList<Order> selectProductsOrders(int product_id) {
         ArrayList<Order> productOrders = new ArrayList<>();
         for (Order o : orders) {
             if(o.getProductID() == product_id) {
@@ -68,10 +69,24 @@ public class Database {
         return productOrders;
     }
 
+    public ArrayList<Order> selectOrders(String buyer) {
+        ArrayList<Order> productOrders = new ArrayList<>();
+        for (Order o : orders) {
+            if(o.getBuyer().equals(buyer)) {
+                productOrders.add(o);
+            }
+        }
+        return productOrders;
+    }
+
+    public String getSeller(int product_id) {
+        return products.get(product_id).getSeller();
+    }
+
     public Collection<Order> selectUsersOrders(String username) {
         ArrayList<Order> productOrders = new ArrayList<>();
         for (Order o : orders) {
-            if(o.getUsername().equals(username)) {
+            if(o.getBuyer().equals(username)) {
                 productOrders.add(o);
             }
         }
@@ -154,4 +169,6 @@ public class Database {
 
         wishlistSubscriptions.put(ProductType.STEEL, new ArrayList<>(List.of("user1")));
     }
+
+
 }

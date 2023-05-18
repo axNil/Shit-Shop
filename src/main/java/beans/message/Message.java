@@ -1,4 +1,4 @@
-package beans;
+package beans.message;
 
 public abstract class Message {
     private String text;
