@@ -1,12 +1,11 @@
 package application;
 
-import beans.Loginbean;
-import beans.Message;
-import beans.Product;
-import beans.User;
+import application.listener.ProductListener;
+import beans.*;
 import enums.ProductType;
 import data.DBI;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserManager implements ProductListener {
@@ -14,6 +13,7 @@ public class UserManager implements ProductListener {
     public UserManager(DBI db) {
         DBI = db;
     }
+
     public String addUser(User user) {
         //check validity
         if (DBI.checkIfEmailExist(user.getEmail())) {
@@ -24,34 +24,32 @@ public class UserManager implements ProductListener {
             return "Username already exists";
         }
 
-        DBI.addUser(user.getUsername(), user);
+        DBI.addUser(user);
         return "OK";
-    }
-
-    public void addToConnectedUsers(Loginbean user, String token) {
-        DBI.addToConnectedUsers(user.getUsername(), token);
     }
 
     public void subscribeToProductType(ProductType pt, String username) {
         DBI.addSubscriber(pt, username);
     }
 
-    public List<Message> getMessages(String username) {
-        User user = DBI.getUser(username);
-        user.setHasUnsentMessages(false);
-        return DBI.getUser(username).getInbox();
+    public ArrayList<Message> getMessages(String username) {
+        DBI.setHasUnsentMessages(username, false);
+        return DBI.getMessages(username);
     }
 
     public boolean checkForUnsentMessages(String username) {
         return DBI.getUser(username).hasUnsentMessages();
-
     }
 
     @Override
     public void onAdd(Product newProduct) {
-        // TODO: Implement
-        // User[] users = DBI.getSubscribedUsers(productType);
-        // for (User u in users)
-        //  u.inbox.add(new WishlistMessage("New products you subcribed on!"));
+        System.out.println("UserManager: onProductAdd!");
+        ProductType pt = newProduct.getProductType();
+        ArrayList<String> subscribers = DBI.getSubscribers(pt);
+
+        for (String uName : subscribers) {
+            System.out.println("Adding wishlist pm to user: " + uName);
+            DBI.addMessage(uName, new WishlistMessage(pt));
+        }
     }
 }

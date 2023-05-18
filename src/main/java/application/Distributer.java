@@ -1,6 +1,5 @@
 package application;
 
-import com.google.gson.Gson;
 import data.DBI;
 import security.Security;
 
@@ -13,7 +12,6 @@ public class Distributer {
     public static Distributer getInstance() {
         return InstanceHolder.instance;
     }
-    private Gson gson;
 
     private final Security security;
     public Security getSecurity() {
@@ -31,11 +29,12 @@ public class Distributer {
     public OrderManager getOrderManager() { return orderManager; }
 
     private Distributer() {
-        gson = new Gson();
         DBI dbi = new DBI();
         security = new Security(dbi);
         productManager = new ProductManager(dbi);
         userManager = new UserManager(dbi);
         orderManager = new OrderManager(dbi);
+
+        productManager.addListener(userManager);
     }
 }

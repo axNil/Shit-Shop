@@ -1,23 +1,15 @@
 package beans;
 
-import application.ProductTypeSubscriber;
-import enums.ProductType;
-
-import java.util.LinkedList;
-import java.util.List;
-import java.util.concurrent.Semaphore;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class User implements ProductTypeSubscriber {
+public class User {
     private String firstName;
     private String lastName;
     private String dob;
     private String email;
     private String username;
     private String password;
-    private LinkedList<Message> inbox;
-    private AtomicBoolean hasUnsentMessages;
-    private Semaphore sem;
+    private final AtomicBoolean hasUnsentMessages;
 
     public User(String firstName, String lastName, String dob, String email, String username, String password) {
         this.firstName = firstName;
@@ -26,21 +18,8 @@ public class User implements ProductTypeSubscriber {
         this.email = email;
         this.username = username;
         this.password = password;
-        this.inbox = new LinkedList<>();
         hasUnsentMessages = new AtomicBoolean();
-        sem = new Semaphore(1);
-    }
-
-    public List<Message> getInbox() {
-        try {
-            sem.acquire();
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-        List<Message> mess = inbox;
-        sem.release();
-        return mess;
-    }
+     }
 
     public String getFirstName() {
         return firstName;
@@ -89,20 +68,6 @@ public class User implements ProductTypeSubscriber {
     public void setPassword(String password) {
         this.password = password;
     }
-
-    @Override
-    public void update(ProductType productType) {
-        try {
-            sem.acquire();
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-        inbox.add(new WishlistMessage(productType));
-        hasUnsentMessages.set(true);
-        sem.release();
-    }
-
-
 
     public boolean hasUnsentMessages() {
         return hasUnsentMessages.get();

@@ -1,129 +1,79 @@
 package data;
 
-import application.ProductTypeSubscriber;
+import beans.Message;
+import beans.Order;
 import beans.Product;
 import beans.User;
-import enums.Color;
-import enums.Condition;
 import enums.ProductType;
 
-import java.io.*;
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class DBI {
-    private AtomicInteger productIDs;
-
-    //Username, user
-    private ConcurrentHashMap<String, User> users;
-
-    //username, token
-    private ConcurrentHashMap<String, String> connectedUsers;
-
-    //productType, observer(user)
-    private ConcurrentHashMap<ProductType, LinkedList<ProductTypeSubscriber>> wishlistSubscriptions;
-
-    //productID, product
-    private ConcurrentHashMap<Integer, Product> products;
+    private final Database db;
 
     public DBI() {
-        initProductID();
-        users = new ConcurrentHashMap<>();
-        connectedUsers = new ConcurrentHashMap<>();
-        wishlistSubscriptions = new ConcurrentHashMap<>();
-        products = new ConcurrentHashMap<>();
-
-        fill();
+        db = new Database();
     }
 
     public boolean checkIfUsernameExist(String username) {
-        return users.containsKey(username);
+        for (User u : db.selectAllUsers()) {
+            if (u.getUsername().equals(username)) return true;
+        }
+        return false;
     }
 
     public boolean checkIfEmailExist(String email) {
-        for (User u : users.values())
+        for (User u : db.selectAllUsers())
             if (u.getEmail().equals(email)) return true;
 
         return false;
     }
 
     public boolean addOrder(String username, int productID) {
-        // SQL BOY
-        // username ok, productID ok, order is unique...
-        return true;
+        Order order = db.placeOrder(username, productID);
+        return order != null;
     }
 
     public void addSubscriber(ProductType pt, String username) {
-        User user = users.get(username);
-        if (wishlistSubscriptions.containsKey(pt)) {
-            wishlistSubscriptions.get(pt).add(user);
-        } else {
-            wishlistSubscriptions.put(pt, new LinkedList<>(List.of(user)));
-        }
+        db.addWishlistSubscribtion(pt, username);
     }
 
     public String getPassword(String username) {
-        return users.get(username).getPassword();
+        return db.selectUser(username).getPassword();
     }
 
     public List<Product> getProducts() {
-        return products.values().stream().toList();
+        return db.selectAllProducts().stream().toList();
     }
 
-    public void setProducts(ConcurrentHashMap<Integer, Product> products) {
-        this.products = products;
-    }
-
-    public boolean addToConnectedUsers(String user, String token) {
-        connectedUsers.put(user, token);
-        return true;
-    }
-
-    public void addUser(String username, User user) {
-        users.put(username, user);
+    public void addUser(User user) {
+        db.addUser(user);
     }
 
     public User getUser(String username) {
-        return users.get(username);
-    }
-
-    private void fill() {
-        products.put(1000, new Product(ProductType.CHEESE, "Flens", 24, 2023, Color.UNSPECIFIED, Condition.DEFECT, "Viktor", 1000));
-        products.put(1001, new Product(ProductType.LAPTOP, "Flenky", 10, 2023, Color.UNSPECIFIED, Condition.DEFECT, "Viktor", 1001));
-        users.put("admin", new User("admin", "admin", "2023-05-12", "admin@shitshop.com", "admin", "admin"));
-    }
-
-    private void initProductID() {
-        try (Scanner sc = new Scanner(new File("src/main/resources/data/productIDs.txt"))) {
-            int pid = sc.nextInt();
-            productIDs = new AtomicInteger(pid);
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw new RuntimeException("ProductID read no good");
-        }
-    }
-
-    private void writeProductID() {
-        try (FileWriter fw = new FileWriter("src/main/resources/data/productIDs.txt")){
-            fw.write(productIDs.toString());
-        } catch (IOException e) {
-            throw new RuntimeException("ProductID write no good");
-        }
-    }
-
-    public int getProductID() {
-        return productIDs.getAndIncrement();
+        return db.selectUser(username);
     }
 
     public void addProduct(Product product) {
-        products.put(product.getProductID(), product);
-        writeProductID();
+        db.addProduct(product);
     }
 
-    public LinkedList<ProductTypeSubscriber> getSubscribers(ProductType productType) {
-        return wishlistSubscriptions.get(productType);
+    public ArrayList<String> getSubscribers(ProductType productType) {
+        return db.selectAllSubscribers(productType);
+    }
+
+    public void addMessage(String username, Message message) {
+        db.addMessage(username, message);
+    }
+
+    public ArrayList<Message> getMessages(String username) {
+        return db.selectMessages(username);
+    }
+
+    public void setHasUnsentMessages(String username, boolean hasUnsent) {
+        User u = db.selectUser(username);
+        u.setHasUnsentMessages(hasUnsent);
+        db.updateUser(username, u);
     }
 }

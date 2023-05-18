@@ -1,11 +1,11 @@
 package application;
 
+import application.listener.ProductListener;
 import filter.FilterCriteria;
 import beans.Product;
 import data.DBI;
-import enums.ProductType;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ProductManager {
@@ -15,28 +15,25 @@ public class ProductManager {
         DBI = db;
     }
 
+    private final ArrayList<ProductListener> listeners = new ArrayList<>();
+    public void addListener(ProductListener listener) {
+        listeners.add(listener);
+    }
+    public void onProductAdded(Product newProduct) {
+        new Thread(()-> {
+            for (ProductListener l : listeners) {
+                l.onAdd(newProduct);
+            }
+        }).start();
+    }
+
     public void addNewProduct(Product product) {
-        product.setProductID(DBI.getProductID());
         DBI.addProduct(product);
-        notifySubscribersAsync(product.getProductType());
+        onProductAdded(product);
     }
     
     public List<Product> productSearch(List<FilterCriteria> criterias) {
         List<Product> products = DBI.getProducts();
         return SearchUtils.search(products, criterias);
     }
-
-    private void notifySubscribersAsync(ProductType productType) {
-        new Thread(()-> {
-            LinkedList<ProductTypeSubscriber> subscribers = DBI.getSubscribers(productType);
-            if (subscribers != null) {
-                for (ProductTypeSubscriber o : subscribers)
-                    o.update(productType);
-            }
-        }).start();
-    }
-    
-
-
-
 }

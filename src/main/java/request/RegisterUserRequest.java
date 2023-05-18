@@ -1,11 +1,10 @@
 package request;
 
 import application.Distributer;
-import application.UserManager;
 import beans.User;
 import com.google.gson.Gson;
 import io.javalin.http.Context;
-import security.Security;
+import request.utils.ResponseMessageBuilder;
 
 import java.util.HashMap;
 
@@ -24,7 +23,7 @@ public class RegisterUserRequest extends UnsafeRequest {
 
             ctx.status(201).json(response);
         } else {
-            ctx.status(400).json(MessageBuilder.createErrorMessage(result));
+            ctx.status(400).json(ResponseMessageBuilder.createErrorMessage(result));
         }
     }
 }
