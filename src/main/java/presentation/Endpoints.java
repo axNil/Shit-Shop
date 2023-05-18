@@ -38,6 +38,11 @@ public class Endpoints {
             new AddProductRequest().doHandle(ctx);
         });
 
+        //get the product types
+        app.get("/product/types", (ctx -> {
+            new GetProductTypesRequest().doHandle(ctx);
+        }));
+
         //TODO: fetch all orders
         app.get("/order", (ctx) -> {
 

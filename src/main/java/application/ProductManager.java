@@ -35,6 +35,10 @@ public class ProductManager {
             }
         }).start();
     }
+
+    public ProductType[] getProducTypes() {
+        return ProductType.values();
+    }
     
 
 
