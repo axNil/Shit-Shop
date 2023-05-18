@@ -9,7 +9,7 @@ public class Order {
     private final int product_id;
     private OrderStatus status;
     private final String orderedDate;
-    private String processedDate = "";
+    private String processedDate;
 
     public Order(String buyer, int product_id) {
         this.buyer = buyer;
@@ -25,13 +25,13 @@ public class Order {
     public int getProductID() { return product_id; }
 
     public void approveOrder() {
-        if(processedDate.equals("")) {
+        if(processedDate == null || processedDate.equals("")) {
             status = OrderStatus.APPROVED;
             processedDate = LocalDateTime.now().toString();
         }
     }
     public void declineOrder() {
-        if(processedDate.equals("")) {
+        if(processedDate == null || processedDate.equals("")) {
             status = OrderStatus.DECLINED;
             processedDate = LocalDateTime.now().toString();
         }

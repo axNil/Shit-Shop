@@ -133,7 +133,12 @@ public class Database {
     }
 
     public void addMessage(String username, Message message) {
-        userMessages.get(username).add(message);
+        ArrayList<Message> inbox = userMessages.get(username);
+        if(inbox == null) {
+            inbox = new ArrayList<>();
+            userMessages.put(username, inbox);
+        }
+        inbox.add(message);
     }
 
     //// Init DB ////
