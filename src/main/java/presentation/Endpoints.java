@@ -69,5 +69,10 @@ public class Endpoints {
         app.get("/message/unsent", (ctx) -> {
             new GetUnsentMessagesRequest().doHandle(ctx);
         });
+
+        //get the condition types
+        app.get("product/condition", (ctx) -> {
+           new GetConditionsRequest().doHandle(ctx);
+        });
     }
 }

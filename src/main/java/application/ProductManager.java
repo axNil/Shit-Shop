@@ -1,10 +1,12 @@
 package application;
 
+import enums.Condition;
 import filter.FilterCriteria;
 import beans.Product;
 import data.DBI;
 import enums.ProductType;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -36,11 +38,22 @@ public class ProductManager {
         }).start();
     }
 
-    public ProductType[] getProducTypes() {
-        return ProductType.values();
+    public String[] getProductTypes() {
+        ProductType[] productTypes = ProductType.values();
+        String[] productTypesStrings = new String[productTypes.length];
+        for (int i = 0; i < productTypes.length; i++) {
+            productTypesStrings[i] = productTypes[i].toString();
+        }
+        return productTypesStrings;
     }
-    
 
 
-
+    public String[] getConditions() {
+        Condition[] conditions = Condition.values();
+        String[] conditionStrings = new String[conditions.length];
+        for (int i = 0; i < conditions.length; i++) {
+            conditionStrings[i] = conditions[i].toString();
+        }
+        return conditionStrings;
+    }
 }

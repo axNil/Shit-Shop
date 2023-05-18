@@ -7,7 +7,7 @@ import io.javalin.http.Context;
 public class GetProductTypesRequest extends UnsafeRequest {
     @Override
     protected void handle(Context ctx) {
-        ProductType[] productTypes = Distributer.getInstance().getProductManager().getProducTypes();
+        String[] productTypes = Distributer.getInstance().getProductManager().getProductTypes();
         ctx.status(200).json(productTypes);
     }
 }
