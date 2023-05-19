@@ -37,6 +37,12 @@ public class Endpoints {
             new AddProductRequest().doHandle(ctx);
         });
 
+        //get the product types
+        app.get("/product/types", (ctx -> {
+            new GetProductTypesRequest().doHandle(ctx);
+        }));
+
+        //TODO: fetch all orders
         //fetch my orders // shows orders i've placed, AKA. order history
         app.get("/order", (ctx) -> {
             new OrderHistoryRequest().doHandle(ctx);
@@ -65,6 +71,11 @@ public class Endpoints {
         //get unsent messages from username
         app.get("/message/unsent", (ctx) -> {
             new GetUnsentMessagesRequest().doHandle(ctx);
+        });
+
+        //get the condition types
+        app.get("product/condition", (ctx) -> {
+           new GetConditionsRequest().doHandle(ctx);
         });
     }
 }

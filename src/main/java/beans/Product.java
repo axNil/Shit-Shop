@@ -14,8 +14,9 @@ public class Product {
     private String seller;
     private int productID;
     private boolean isSold;
+    private String imageUrl;
 
-    public Product(ProductType productType, String name, double price, int yearOfProduction, Color color, Condition condition, String seller, int productID) {
+    public Product(ProductType productType, String name, double price, int yearOfProduction, Color color, Condition condition, String seller, int productID, String imageUrl) {
         this.productType = productType;
         this.name = name;
         this.price = price;
@@ -24,6 +25,7 @@ public class Product {
         this.condition = condition;
         this.seller = seller;
         this.productID = productID;
+        this.imageUrl = imageUrl;
     }
 
     public boolean isSold() {
@@ -96,5 +98,13 @@ public class Product {
 
     public void setProductID(int productID) {
         this.productID = productID;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }
