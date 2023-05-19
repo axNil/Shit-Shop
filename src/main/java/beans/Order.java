@@ -3,6 +3,7 @@ package beans;
 import enums.OrderStatus;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 public class Order {
     private final String buyer;
@@ -35,5 +36,13 @@ public class Order {
             status = OrderStatus.DECLINED;
             processedDate = LocalDateTime.now().toString();
         }
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Order order)
+            return product_id == order.getProductID() && Objects.equals(buyer, order.getBuyer());
+
+        return false;
     }
 }

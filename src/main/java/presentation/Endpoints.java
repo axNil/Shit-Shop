@@ -42,12 +42,12 @@ public class Endpoints {
             new OrderHistoryRequest().doHandle(ctx);
         });
 
+        // TODO: /order/seller?         // show orders for all my products
+
         // /order/{product_id}     // shows orders for a specific listing
         app.get("/order/{product_id}", (ctx) -> {
             new PendingOrdersRequest().doHandle(ctx);
         });
-
-        //TODO:Get a specific order maybe?
 
         app.post("/order", (ctx) -> {
             new PlaceOrderRequest().doHandle(ctx);

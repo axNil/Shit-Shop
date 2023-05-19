@@ -18,13 +18,15 @@ public class OrderManager implements OrderListener {
 
     public void placeOrder(String username, int productID) {
         Order newOrder = DBI.addOrder(username, productID);
-        onAdd(newOrder);
+        if(newOrder != null) {
+            onAdd(newOrder);
+        }
     }
 
     public void approveOrder(Order approvedOrder) {
         ArrayList<Order> orders = DBI.getOrders(approvedOrder.getProductID());
         for (Order o : orders) {
-            if(o != approvedOrder) {
+            if(!o.equals(approvedOrder)) {
                 o.declineOrder();
                 onDecline(o);
             }
@@ -55,12 +57,14 @@ public class OrderManager implements OrderListener {
     // This should call the listeners, which then creates messages...
     @Override
     public void onDecline(Order declinedOrder) {
+        DBI.updateOrder(declinedOrder);
         DBI.addMessage(declinedOrder.getBuyer(), new OrderDeclinedMessage(declinedOrder));
     }
 
     // This should call the listeners, which then creates messages...
     @Override
     public void onApprove(Order approvedOrder) {
+        DBI.updateOrder(approvedOrder);
         DBI.addMessage(approvedOrder.getBuyer(), new OrderApprovedMessage(approvedOrder));
     }
 }

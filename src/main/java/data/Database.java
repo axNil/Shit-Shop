@@ -42,6 +42,19 @@ public class Database {
         return userMessages.get(username);
     }
 
+    public boolean updateMessage(String username, Message updatedMessage) {
+        ArrayList<Message> inbox = userMessages.get(username);
+        if (inbox == null) return false;
+
+        for (int i = 0; i < inbox.size(); i++) {
+            if(inbox.get(i).equals(updatedMessage)) {
+                inbox.set(i, updatedMessage);
+                return true;
+            }
+        }
+        return false;
+    }
+
     public Collection<User> selectAllUsers() {
         return users.values();
     }
@@ -53,6 +66,16 @@ public class Database {
     public String updateUser(String username, User newUserData) {
         users.put(username, newUserData);
         return username;
+    }
+
+    public Order updateOrder(Order newOrder) {
+        for (int i = 0; i < orders.size(); i++) {
+            if(orders.get(i).equals(newOrder)) {
+                orders.set(i, newOrder);
+                return newOrder;
+            }
+        }
+        return null;
     }
 
     public Collection<Order> selectAllOrders() {
@@ -81,16 +104,6 @@ public class Database {
 
     public String getSeller(int product_id) {
         return products.get(product_id).getSeller();
-    }
-
-    public Collection<Order> selectUsersOrders(String username) {
-        ArrayList<Order> productOrders = new ArrayList<>();
-        for (Order o : orders) {
-            if(o.getBuyer().equals(username)) {
-                productOrders.add(o);
-            }
-        }
-        return productOrders;
     }
 
     /**
@@ -154,10 +167,10 @@ public class Database {
     }
 
     private void fill() {
-        products.put(1000, new Product(ProductType.CHEESE, "Flens", 24, 2023, Color.UNSPECIFIED, Condition.DEFECT, "Viktor", 1000));
-        products.put(1001, new Product(ProductType.LAPTOP, "Flenky", 10, 2023, Color.UNSPECIFIED, Condition.DEFECT, "Viktor", 1001));
-        users.put("admin", new User("admin", "admin", "2023-05-12", "admin@shitshop.com", "admin", "admin"));
-
+        users.put("admin", new User(
+                "admin", "admin",
+                "2023-05-12", "admin@shitshop.com",
+                "admin", "admin"));
         users.put("user1", new User(
                 "Kalle", "Kalas",
                 "2023-05-18", "email@email.com",
@@ -173,6 +186,11 @@ public class Database {
         )));
 
         wishlistSubscriptions.put(ProductType.STEEL, new ArrayList<>(List.of("user1")));
+
+        products.put(1000, new Product(ProductType.CHEESE, "Flens", 24, 2023, Color.UNSPECIFIED, Condition.DEFECT, "user1", 1000));
+        products.put(1001, new Product(ProductType.LAPTOP, "Flenky", 10, 2023, Color.UNSPECIFIED, Condition.DEFECT, "user1", 1001));
+
+        orders.add(new Order("user2", 1000));
     }
 
 

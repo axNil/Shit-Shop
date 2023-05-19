@@ -42,6 +42,10 @@ public class DBI {
         return db.selectOrders(buyer);
     }
 
+    public Order updateOrder(Order updatedOrder) {
+        return db.updateOrder(updatedOrder);
+    }
+
     public String getSeller(int productID) {
         return db.getSeller(productID);
     }
@@ -80,6 +84,10 @@ public class DBI {
 
     public ArrayList<Message> getMessages(String username) {
         return db.selectMessages(username);
+    }
+
+    public void updateMessage(String username, Message updatedMsg) {
+        db.updateMessage(username, updatedMsg);
     }
 
     public void setHasUnsentMessages(String username, boolean hasUnsent) {

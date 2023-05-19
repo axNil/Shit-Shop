@@ -33,8 +33,22 @@ public class UserManager implements ProductListener {
     }
 
     public ArrayList<Message> getMessages(String username) {
-        DBI.setHasUnsentMessages(username, false);
-        return DBI.getMessages(username);
+        ArrayList<Message> inbox = DBI.getMessages(username);
+        if(inbox == null) {
+            return new ArrayList<>();
+        }
+
+        ArrayList<Message> messages = new ArrayList<>(inbox);
+
+        if(messages.size() > 0) {
+            DBI.setHasUnsentMessages(username, false);
+            for (Message m : messages) {
+                Message updated = new Message(m.getText()) { };
+                updated.setSent(true);
+                DBI.updateMessage(username, updated);
+            }
+        }
+        return messages;
     }
 
     public boolean checkForUnsentMessages(String username) {
