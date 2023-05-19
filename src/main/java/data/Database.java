@@ -187,8 +187,8 @@ public class Database {
 
         wishlistSubscriptions.put(ProductType.STEEL, new ArrayList<>(List.of("user1")));
 
-        products.put(1000, new Product(ProductType.CHEESE, "Flens", 24, 2023, Color.UNSPECIFIED, Condition.DEFECT, "user1", 1000));
-        products.put(1001, new Product(ProductType.LAPTOP, "Flenky", 10, 2023, Color.UNSPECIFIED, Condition.DEFECT, "user1", 1001));
+        products.put(1000, new Product(ProductType.CHEESE, "Flens", 24, 2023, Color.UNSPECIFIED, Condition.DEFECT, "user1", 1000, ""));
+        products.put(1001, new Product(ProductType.LAPTOP, "Flenky", 10, 2023, Color.UNSPECIFIED, Condition.DEFECT, "user1", 1001, ""));
 
         orders.add(new Order("user2", 1000));
     }
