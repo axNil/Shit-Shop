@@ -66,10 +66,11 @@ public class UserManager implements ProductListener {
         System.out.println("UserManager: onProductAdd!");
         ProductType pt = newProduct.getProductType();
         ArrayList<String> subscribers = DBI.getSubscribers(pt);
-
-        for (String uName : subscribers) {
-            System.out.println("Adding wishlist pm to user: " + uName);
-            DBI.addMessage(uName, new WishlistMessage(pt));
+        if (subscribers != null) {
+            for (String uName : subscribers) {
+                System.out.println("Adding wishlist pm to user: " + uName);
+                DBI.addMessage(uName, new WishlistMessage(pt));
+            }
         }
     }
 }
