@@ -20,11 +20,16 @@ public class OrderManager implements OrderListener {
         DBI = db;
     }
 
-    public void placeOrder(String username, int productID) {
+    public boolean placeOrder(String username, int productID) {
         Order newOrder = DBI.addOrder(username, productID);
+
+        //order created
         if(newOrder != null) {
             onAdd(newOrder);
+            return true;
         }
+        //order not created
+        return false;
     }
 
     public void approveOrder(Order approvedOrder) {
