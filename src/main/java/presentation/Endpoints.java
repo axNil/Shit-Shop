@@ -23,7 +23,7 @@ public class Endpoints {
         });
 
         // search products
-        app.get("/product", (ctx) -> {
+        app.post("/product/search", (ctx) -> {
             new SearchRequest().doHandle(ctx);
         });
 
