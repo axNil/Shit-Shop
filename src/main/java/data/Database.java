@@ -61,7 +61,7 @@ public class Database {
     }
 
     public User selectUser(String username) {
-        return users.get(username);
+        return users.getOrDefault(username, null);
     }
 
     public String updateUser(String username, User newUserData) {

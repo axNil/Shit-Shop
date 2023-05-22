@@ -13,8 +13,10 @@ public class AuthTokenRequest extends UnsafeRequest {
     protected void handle(Context ctx) {
         Loginbean user = new Gson().fromJson(ctx.body(), Loginbean.class);
         String token = Distributer.getInstance().getSecurity().authenticateUser(user);
-        if (token.equals("Not valid")) {
-            ctx.status(400).json(ResponseMessageBuilder.createErrorMessage("Invalid auth_token."));
+        if (token.equals("Username doesn't exist")) {
+            ctx.status(400).json(ResponseMessageBuilder.createErrorMessage(token));
+        } else if (token.equals("Wrong password")) {
+            ctx.status(400).json(ResponseMessageBuilder.createErrorMessage(token));
         } else {
             HashMap<String, String> response = new HashMap<>();
             response.put("auth_token", token);

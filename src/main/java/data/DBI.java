@@ -59,7 +59,8 @@ public class DBI {
     }
 
     public String getPassword(String username) {
-        return db.selectUser(username).getPassword();
+        User u = db.selectUser(username);
+        return  u != null ? u.getPassword() : "";
     }
 
     public List<Product> getProducts() {

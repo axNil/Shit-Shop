@@ -31,10 +31,13 @@ public class Security {
     }
 
     public String authenticateUser(Loginbean user) {
-        if (DBI.getPassword(user.getUsername()).equals(user.getPassword())) {
+        String pw = DBI.getPassword(user.getUsername());
+        if (pw.equals("")) {
+            return "Username doesn't exist";
+        } else if (pw.equals(user.getPassword())) {
             return createToken(user.getUsername());
         } else {
-            return "Not valid";
+            return "Wrong password";
         }
     }
 

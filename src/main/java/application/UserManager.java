@@ -16,6 +16,12 @@ public class UserManager implements ProductListener {
 
     public String addUser(User user) {
         //check validity
+        if (user.getUsername().equals("")) {
+            return "Invalid username";
+        }
+        if (user.getPassword().equals("")) {
+            return "Invalid password";
+        }
         if (DBI.checkIfEmailExist(user.getEmail())) {
             return "Email already exists";
         }
