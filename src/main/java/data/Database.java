@@ -4,6 +4,7 @@ import beans.*;
 import beans.message.Message;
 import enums.Color;
 import enums.Condition;
+import enums.OrderStatus;
 import enums.ProductType;
 
 import java.util.*;
@@ -102,6 +103,29 @@ public class Database {
         return productOrders;
     }
 
+
+    public List<Order> selectOrdersWhereSeller(String username) {
+        List<Order> orders = new ArrayList<>();
+        List<Integer> product_ids = new ArrayList<>();
+
+        for (Product p : products.values()) {
+            if(p.getSeller().equals(username)) {
+                product_ids.add(p.getProductID());
+            }
+        }
+
+        for (Integer pid : product_ids) {
+            List<Order> product_orders = selectProductsOrders(pid);
+            for (Order o : product_orders) {
+                if(o.getStatus() != OrderStatus.DECLINED) {
+                    orders.add(o);
+                }
+            }
+        }
+
+        return orders;
+    }
+
     public String getSeller(int product_id) {
         return products.get(product_id).getSeller();
     }
@@ -192,6 +216,4 @@ public class Database {
 
         orders.add(new Order("user2", 1000));
     }
-
-
 }

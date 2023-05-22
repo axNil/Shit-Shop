@@ -42,6 +42,10 @@ public class DBI {
         return db.selectOrders(buyer);
     }
 
+    public List<Order> getOrdersBySeller(String username) {
+        return db.selectOrdersWhereSeller(username);
+    }
+    
     public Order updateOrder(Order updatedOrder) {
         return db.updateOrder(updatedOrder);
     }
@@ -95,4 +99,5 @@ public class DBI {
         u.setHasUnsentMessages(hasUnsent);
         db.updateUser(username, u);
     }
+
 }

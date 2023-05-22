@@ -8,6 +8,7 @@ import beans.message.PendingOrderMessage;
 import data.DBI;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class OrderManager implements OrderListener {
     private final DBI DBI;
@@ -66,5 +67,9 @@ public class OrderManager implements OrderListener {
     public void onApprove(Order approvedOrder) {
         DBI.updateOrder(approvedOrder);
         DBI.addMessage(approvedOrder.getBuyer(), new OrderApprovedMessage(approvedOrder));
+    }
+
+    public List<Order> getOrdersBySeller(String username) {
+        return DBI.getOrdersBySeller(username);
     }
 }

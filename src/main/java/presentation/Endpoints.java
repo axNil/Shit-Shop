@@ -48,7 +48,13 @@ public class Endpoints {
             new OrderHistoryRequest().doHandle(ctx);
         });
 
-        // TODO: /order/seller?         // show orders for all my products
+        // show orders for all my products
+        /**
+         * Returns pending and approved orders for a specific seller.
+         */
+        app.get("/order/seller", (ctx) -> {
+            new SaleHistoryRequest().doHandle(ctx);
+        });
 
         // /order/{product_id}     // shows orders for a specific listing
         app.get("/order/{product_id}", (ctx) -> {
