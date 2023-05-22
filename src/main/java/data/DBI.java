@@ -100,4 +100,7 @@ public class DBI {
         db.updateUser(username, u);
     }
 
+    public Order getOrder(int productID, String buyer) {
+        return db.getOrder(productID,buyer);
+    }
 }

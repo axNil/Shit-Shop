@@ -8,6 +8,8 @@ import beans.message.PendingOrderMessage;
 import data.DBI;
 import enums.OrderStatus;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,10 +33,11 @@ public class OrderManager implements OrderListener {
             if(!o.equals(approvedOrder)) {
                 o.declineOrder();
                 onDecline(o);
+            } else {
+                o.approveOrder();
+                onApprove(o);
             }
         }
-        approvedOrder.approveOrder();
-        onApprove(approvedOrder);
     }
 
     public void declineOrder(Order order) {
@@ -74,12 +77,18 @@ public class OrderManager implements OrderListener {
         return DBI.getOrdersBySeller(username);
     }
 
-    public ArrayList<Order> getApprovedOrders(String username) {
+    public ArrayList<Order> getApprovedOrders(String username, LocalDate from, LocalDate to) {
         ArrayList<Order> response = new ArrayList<>();
         ArrayList<Order> orders = DBI.getOrders(username);
         for (Order o : orders) {
-            if (o.getStatus() == OrderStatus.APPROVED)
-                response.add(o);
+            if (o.getStatus() == OrderStatus.APPROVED) {
+                LocalDate processedDate = LocalDateTime.parse(o.getProcessedDate()).toLocalDate();
+                if (processedDate.isAfter(from) || processedDate.isEqual(from)) {
+                    if (processedDate.isBefore(to) || processedDate.isEqual(to)) {
+                        response.add(o);
+                    }
+                }
+            }
         }
         return response;
     }

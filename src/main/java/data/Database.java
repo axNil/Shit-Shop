@@ -79,6 +79,17 @@ public class Database {
         return null;
     }
 
+    public Order getOrder(int productID, String buyer) {
+        Order o;
+        for (int i = 0; i < orders.size(); i++) {
+            o = orders.get(i);
+            if (o.getProductID() == productID && o.getBuyer().equals(buyer))
+                return o;
+
+        }
+        return null;
+    }
+
     public Collection<Order> selectAllOrders() {
         return orders;
     }

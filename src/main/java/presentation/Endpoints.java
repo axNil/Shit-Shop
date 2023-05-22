@@ -42,8 +42,7 @@ public class Endpoints {
             new GetProductTypesRequest().doHandle(ctx);
         }));
 
-        //TODO: fetch all orders
-        //fetch my orders // shows orders i've placed, ALL orders approved/pending
+        //fetch my orders // shows orders i've placed, ALL orders approved+pending
         app.get("/order", (ctx) -> {
             new OrderHistoryRequest().doHandle(ctx);
         });
@@ -53,23 +52,22 @@ public class Endpoints {
             new ApprovedOrdersRequest().doHandle(ctx);
         });
 
-        // show orders for all my products
-        /**
-         * Returns pending and approved orders for a specific seller.
-         */
+        //fetch orders for all my products (pending, approved)
         app.get("/order/seller", (ctx) -> {
             new SaleHistoryRequest().doHandle(ctx);
         });
 
-        // /order/{product_id}     // shows orders for a specific listing
+        //fetch orders for a specific listing
         app.get("/order/{product_id}", (ctx) -> {
             new PendingOrdersRequest().doHandle(ctx);
         });
 
+        //place new order
         app.post("/order", (ctx) -> {
             new PlaceOrderRequest().doHandle(ctx);
         });
 
+        //decline/approve order
         app.patch("/order", (ctx) -> {
             new ProcessOrderRequest().doHandle(ctx);
         });
