@@ -86,5 +86,10 @@ public class Endpoints {
         app.get("product/condition", (ctx) -> {
            new GetConditionsRequest().doHandle(ctx);
         });
+
+        //get the color types
+        app.get("product/color", (ctx) -> {
+            new GetColorRequest().doHandle(ctx);
+        });
     }
 }

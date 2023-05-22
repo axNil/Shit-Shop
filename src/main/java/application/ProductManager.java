@@ -1,5 +1,6 @@
 package application;
 
+import enums.Color;
 import enums.Condition;
 import application.listener.ProductListener;
 import filter.FilterCriteria;
@@ -56,5 +57,14 @@ public class ProductManager {
             conditionStrings[i] = conditions[i].toString();
         }
         return conditionStrings;
+    }
+
+    public String[] getColors() {
+        Color[] colors = Color.values();
+        String[] colorStrings = new String[colors.length];
+        for (int i = 0; i < colors.length; i++) {
+            colorStrings[i] = colors[i].toString();
+        }
+        return colorStrings;
     }
 }
