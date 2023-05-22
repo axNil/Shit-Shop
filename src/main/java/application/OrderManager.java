@@ -6,6 +6,7 @@ import beans.message.OrderApprovedMessage;
 import beans.message.OrderDeclinedMessage;
 import beans.message.PendingOrderMessage;
 import data.DBI;
+import enums.OrderStatus;
 
 import java.util.ArrayList;
 
@@ -66,5 +67,15 @@ public class OrderManager implements OrderListener {
     public void onApprove(Order approvedOrder) {
         DBI.updateOrder(approvedOrder);
         DBI.addMessage(approvedOrder.getBuyer(), new OrderApprovedMessage(approvedOrder));
+    }
+
+    public ArrayList<Order> getApprovedOrders(String username) {
+        ArrayList<Order> response = new ArrayList<>();
+        ArrayList<Order> orders = DBI.getOrders(username);
+        for (Order o : orders) {
+            if (o.getStatus() == OrderStatus.APPROVED)
+                response.add(o);
+        }
+        return response;
     }
 }

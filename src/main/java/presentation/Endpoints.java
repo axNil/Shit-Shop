@@ -43,9 +43,14 @@ public class Endpoints {
         }));
 
         //TODO: fetch all orders
-        //fetch my orders // shows orders i've placed, AKA. order history
+        //fetch my orders // shows orders i've placed, ALL orders approved/pending
         app.get("/order", (ctx) -> {
             new OrderHistoryRequest().doHandle(ctx);
+        });
+
+        //fetch all orders that has been approved AKA. order history
+        app.get("/order/approved", (ctx) -> {
+            new ApprovedOrdersRequest().doHandle(ctx);
         });
 
         // TODO: /order/seller?         // show orders for all my products
