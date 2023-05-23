@@ -50,7 +50,10 @@ public class UserManager implements ProductListener {
         if(messages.size() > 0) {
             DBI.setHasUnsentMessages(username, false);
             for (Message m : messages) {
-                Message updated = new Message(m.getText(), m.getMessageType()) { };
+                Message updated = switch (m.getMessageType()) {
+                    case APPROVED,PENDING,DECLINED: yield new Message(m.getText(), m.getMessageType(), m.getProductID()) {};
+                    case WISHLIST: yield new Message(m.getText(),m.getMessageType(),m.getProductType()) {};
+                };
                 updated.setSent(true);
                 DBI.updateMessage(username, updated);
             }

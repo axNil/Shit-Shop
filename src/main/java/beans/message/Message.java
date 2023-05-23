@@ -1,17 +1,49 @@
 package beans.message;
 
 import enums.MessageType;
+import enums.ProductType;
 
 import java.util.Objects;
 
 public abstract class Message {
     private String text;
     private final MessageType messageType;
+    private int productID;
+    private ProductType productType;
     private boolean isSent;
 
-    public Message(String text, MessageType messageType) {
+    public Message(String text, MessageType messageType, int productID, ProductType productType) {
         this.text = text;
         this.messageType = messageType;
+        this.productID = productID;
+        this.productType = productType;
+    }
+
+    public Message(String text, MessageType messageType, int productID) {
+        this(text, messageType, productID, null);
+    }
+
+    public Message(String text, MessageType messageType, ProductType productType) {
+        this(text, messageType, -1, productType);
+    }
+    public Message(String text, MessageType messageType) {
+        this(text, messageType, -1, null);
+    }
+
+    public int getProductID() {
+        return productID;
+    }
+
+    public void setProductID(int productID) {
+        this.productID = productID;
+    }
+
+    public ProductType getProductType() {
+        return productType;
+    }
+
+    public void setProductType(ProductType productType) {
+        this.productType = productType;
     }
 
     public boolean isSent() {
