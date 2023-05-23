@@ -15,7 +15,13 @@ public class Security {
         DBI = db;
     }
 
-    public static boolean authenticateToken(String token) {
+    public boolean authenticateToken(String token) {
+        //check username
+        String username = token.split(" ")[0];
+        if (!DBI.checkIfUsernameExist(username))
+            return false;
+
+        //check LocalDateTime
         LocalDateTime currentDateTime = LocalDateTime.now();
         try {
             LocalDateTime receivedTime = LocalDateTime.parse(token.split(" ")[1]);
