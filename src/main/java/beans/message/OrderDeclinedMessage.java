@@ -1,9 +1,12 @@
 package beans.message;
 
 import beans.Order;
+import enums.MessageType;
 
 public class OrderDeclinedMessage extends Message {
+    private final int productID;
     public OrderDeclinedMessage(Order approvedOrder) {
-        super(String.format("Your order for %s has been declined.", approvedOrder.getProductID()));
+        super("Your order has been declined.", MessageType.DECLINED);
+        productID = approvedOrder.getProductID();
     }
 }

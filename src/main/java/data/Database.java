@@ -2,6 +2,7 @@ package data;
 
 import beans.*;
 import beans.message.Message;
+import beans.message.WishlistMessage;
 import enums.Color;
 import enums.Condition;
 import enums.OrderStatus;

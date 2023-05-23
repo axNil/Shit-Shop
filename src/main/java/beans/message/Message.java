@@ -1,13 +1,17 @@
 package beans.message;
 
+import enums.MessageType;
+
 import java.util.Objects;
 
 public abstract class Message {
     private String text;
+    private final MessageType messageType;
     private boolean isSent;
 
-    public Message(String text) {
+    public Message(String text, MessageType messageType) {
         this.text = text;
+        this.messageType = messageType;
     }
 
     public boolean isSent() {
@@ -20,6 +24,10 @@ public abstract class Message {
 
     public String getText() {
         return text;
+    }
+
+    public MessageType getMessageType() {
+        return messageType;
     }
 
     public void setText(String text) {

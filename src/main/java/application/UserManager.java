@@ -3,6 +3,7 @@ package application;
 import application.listener.ProductListener;
 import beans.*;
 import beans.message.Message;
+import beans.message.WishlistMessage;
 import enums.ProductType;
 import data.DBI;
 
@@ -49,7 +50,7 @@ public class UserManager implements ProductListener {
         if(messages.size() > 0) {
             DBI.setHasUnsentMessages(username, false);
             for (Message m : messages) {
-                Message updated = new Message(m.getText()) { };
+                Message updated = new Message(m.getText(), m.getMessageType()) { };
                 updated.setSent(true);
                 DBI.updateMessage(username, updated);
             }
