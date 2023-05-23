@@ -13,7 +13,7 @@ public class RegisterUserRequest extends UnsafeRequest {
     protected void handle(Context ctx) {
         System.out.println("create new user");
         User user = new Gson().fromJson(ctx.body(), User.class);
-
+        user.setHasUnsentMessages(false);
         //create user
         String result = Distributer.getInstance().getUserManager().addUser(user);
         if (result.equals("OK")) {

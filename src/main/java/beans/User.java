@@ -9,7 +9,7 @@ public class User {
     private String email;
     private String username;
     private String password;
-    private final AtomicBoolean hasUnsentMessages;
+    private AtomicBoolean hasUnsentMessages;
 
     public User(String firstName, String lastName, String dob, String email, String username, String password) {
         this.firstName = firstName;
@@ -74,6 +74,9 @@ public class User {
     }
 
     public void setHasUnsentMessages(boolean hasUnsentMessages) {
+        if (this.hasUnsentMessages == null) {
+            this.hasUnsentMessages = new AtomicBoolean();
+        }
         this.hasUnsentMessages.set(hasUnsentMessages);
     }
 }
