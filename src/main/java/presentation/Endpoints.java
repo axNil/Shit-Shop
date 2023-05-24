@@ -48,7 +48,7 @@ public class Endpoints {
         });
 
         //fetch all orders that has been approved AKA. order history
-        app.get("/order/approved", (ctx) -> {
+        app.post("/order/approved", (ctx) -> {
             new ApprovedOrdersRequest().doHandle(ctx);
         });
 
