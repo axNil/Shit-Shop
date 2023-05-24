@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class Order {
+    private final String order_id;
     private final String buyer;
     private final int product_id;
     private OrderStatus status;
@@ -17,6 +18,11 @@ public class Order {
         this.product_id = product_id;
         status = OrderStatus.PENDING;
         orderedDate = LocalDateTime.now().toString();
+        order_id = buyer+product_id;
+    }
+
+    public String getOrderID() {
+        return order_id;
     }
 
     public String getOrderedDate() { return orderedDate; }
