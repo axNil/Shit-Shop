@@ -1,6 +1,7 @@
 package request;
 
 import application.Distributer;
+import beans.CompletedOrder;
 import beans.Order;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -38,7 +39,7 @@ public class ApprovedOrdersRequest extends SafeRequest {
             date2 = LocalDate.MAX;
         }
 
-        ArrayList<Order> orders = Distributer.getInstance().getOrderManager().getApprovedOrders(username, date1, date2);
+        ArrayList<CompletedOrder> orders = Distributer.getInstance().getOrderManager().getApprovedOrders(username, date1, date2);
         ctx.status(200).json(orders);
     }
 }

@@ -2,6 +2,7 @@ package application;
 
 import application.listener.OrderListener;
 import application.listener.ProductListener;
+import beans.CompletedOrder;
 import beans.Order;
 import beans.message.OrderApprovedMessage;
 import beans.message.OrderDeclinedMessage;
@@ -100,15 +101,19 @@ public class OrderManager implements OrderListener {
         return DBI.getOrdersBySeller(username);
     }
 
-    public ArrayList<Order> getApprovedOrders(String username, LocalDate from, LocalDate to) {
-        ArrayList<Order> response = new ArrayList<>();
+    public ArrayList<CompletedOrder> getApprovedOrders(String username, LocalDate from, LocalDate to) {
+        ArrayList<CompletedOrder> response = new ArrayList<>();
         ArrayList<Order> orders = DBI.getOrders(username);
+
         for (Order o : orders) {
             if (o.getStatus() == OrderStatus.APPROVED) {
                 LocalDate processedDate = LocalDateTime.parse(o.getProcessedDate()).toLocalDate();
                 if (processedDate.isAfter(from) || processedDate.isEqual(from)) {
                     if (processedDate.isBefore(to) || processedDate.isEqual(to)) {
-                        response.add(o);
+                        CompletedOrder co = new CompletedOrder();
+                        co.order = o;
+                        co.product = DBI.getProduct(o.getProductID());
+                        response.add(co);
                     }
                 }
             }

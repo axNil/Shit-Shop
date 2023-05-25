@@ -241,4 +241,8 @@ public class Database {
 
         orders.add(new Order("user2", 1000));
     }
+
+    public Product selectProductByID(int product_id) {
+        return products.get(product_id);
+    }
 }
