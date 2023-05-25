@@ -234,13 +234,13 @@ public class Database {
                 new WishlistMessage(ProductType.ROBOT)
         )));
 
-        wishlistSubscriptions.put(ProductType.STEEL, new ArrayList<>(List.of("user1")));
+        wishlistSubscriptions.put(ProductType.STEEL, new ArrayList<>(List.of("sven")));
 
         products.put(1000, new Product(ProductType.CHEESE, "Gorgonzola", 24, 2023, Color.UNSPECIFIED, Condition.DEFECT, "sven", 1000, "https://i.redd.it/1ydvktzw1mj51.jpg"));
         products.put(1001, new Product(ProductType.LAPTOP, "MacBook Pro", 10, 2023, Color.CAMO, Condition.DEFECT, "sven", 1001, "https://eshop.macsales.com/blog/wp-content/uploads/2017/11/macbookpro-broken-1.jpg"));
         products.put(1002, new Product(ProductType.ROBOT, "Epic panda robot", 1000, 2021, Color.UNSPECIFIED, Condition.VERY_GOOD, "sven", 1002, "https://www.nicepng.com/png/detail/243-2436491_epic-robot-panda-statue-in-epic-robot.png"));
         products.put(1003, new Product(ProductType.STEEL, "Big roll of galvanized steel", 10000, 2000, Color.UNSPECIFIED, Condition.VERY_GOOD, "sven", 1003, "https://www.haoyusteel.com/uploads/201920635/galvalumed-steel-plate-with-afp51117010362.jpg"));
-
+        products.put(1004, new Product(ProductType.ROBOT, "Cheap Robot", 1, 1902, Color.UNSPECIFIED, Condition.GOOD, "sven", 1004, "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRkulDsXbhe_JUYWy93VRdBXEKYra8GoQgtPw&usqp=CAU"));
     }
 
     public Product selectProductByID(int product_id) {
