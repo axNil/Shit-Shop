@@ -216,6 +216,15 @@ public class Database {
                 "2023-05-99", "mina@brev.net",
                 "user2", "user2"));
 
+        users.put("sven", new User(
+                "Bolla", "Bombastic",
+                "2000-05-05", "mina@brev.net",
+                "sven", "sven"));
+        users.put("jan", new User(
+                "Bolla", "Bombastic",
+                "2000-05-05", "mina@brev.net",
+                "jan", "jan"));
+
         userMessages.put("user1", new ArrayList<>(Arrays.asList(
                 new WishlistMessage(ProductType.LAWNMOWER),
                 new WishlistMessage(ProductType.ROBOT)
