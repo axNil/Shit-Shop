@@ -1,6 +1,7 @@
 package application;
 
 import application.listener.OrderListener;
+import application.listener.ProductListener;
 import beans.Order;
 import beans.message.OrderApprovedMessage;
 import beans.message.OrderDeclinedMessage;
@@ -15,6 +16,11 @@ import java.util.List;
 
 public class OrderManager implements OrderListener {
     private final DBI DBI;
+
+    private final ArrayList<OrderListener> listeners = new ArrayList<>();
+    public void addListener(OrderListener listener) {
+        listeners.add(listener);
+    }
 
     protected OrderManager(DBI db) {
         DBI = db;
@@ -69,6 +75,12 @@ public class OrderManager implements OrderListener {
     public void onDecline(Order declinedOrder) {
         DBI.updateOrder(declinedOrder);
         DBI.addMessage(declinedOrder.getBuyer(), new OrderDeclinedMessage(declinedOrder));
+
+        new Thread(()-> {
+            for (OrderListener l : listeners) {
+                l.onDecline(declinedOrder);
+            }
+        }).start();
     }
 
     // This should call the listeners, which then creates messages...
@@ -76,6 +88,12 @@ public class OrderManager implements OrderListener {
     public void onApprove(Order approvedOrder) {
         DBI.updateOrder(approvedOrder);
         DBI.addMessage(approvedOrder.getBuyer(), new OrderApprovedMessage(approvedOrder));
+
+        new Thread(()-> {
+            for (OrderListener l : listeners) {
+                l.onApprove(approvedOrder);
+            }
+        }).start();
     }
 
     public List<Order> getOrdersBySeller(String username) {

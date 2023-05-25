@@ -1,5 +1,7 @@
 package application;
 
+import application.listener.OrderListener;
+import beans.Order;
 import enums.Color;
 import enums.Condition;
 import application.listener.ProductListener;
@@ -11,7 +13,7 @@ import enums.ProductType;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProductManager {
+public class ProductManager implements OrderListener {
     private final DBI DBI;
 
     protected ProductManager(DBI db) {
@@ -37,7 +39,11 @@ public class ProductManager {
     
     public List<Product> productSearch(List<FilterCriteria> criterias) {
         List<Product> products = DBI.getProducts();
-        return SearchUtils.search(products, criterias);
+        List<Product> unsoldProducts = new ArrayList<>();
+        for (Product p : products) {
+            if(!p.isSold()) unsoldProducts.add(p);
+        }
+        return SearchUtils.search(unsoldProducts, criterias);
     }
 
     public String[] getProductTypes() {
@@ -66,5 +72,20 @@ public class ProductManager {
             colorStrings[i] = colors[i].toString();
         }
         return colorStrings;
+    }
+
+    @Override
+    public void onAdd(Order newOrder) {
+        // I dont care
+    }
+
+    @Override
+    public void onDecline(Order declinedOrder) {
+        // I dont care
+    }
+
+    @Override
+    public void onApprove(Order approvedOrder) {
+        DBI.setProductToSold(approvedOrder.getProductID());
     }
 }

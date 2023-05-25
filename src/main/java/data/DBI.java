@@ -67,6 +67,10 @@ public class DBI {
         return db.selectAllProducts().stream().toList();
     }
 
+    public void setProductToSold(int product_id) {
+        db.setProductToSold(product_id);
+    }
+
     public void addUser(User user) {
         db.addUser(user);
     }

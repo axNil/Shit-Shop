@@ -36,5 +36,6 @@ public class Distributer {
         orderManager = new OrderManager(dbi);
 
         productManager.addListener(userManager);
+        orderManager.addListener(productManager);
     }
 }

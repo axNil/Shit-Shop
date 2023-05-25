@@ -105,6 +105,10 @@ public class Database {
         return productOrders;
     }
 
+    public void setProductToSold(int product_id) {
+        products.get(product_id).setSold(true);
+    }
+
     public ArrayList<Order> selectOrders(String buyer) {
         ArrayList<Order> productOrders = new ArrayList<>();
         for (Order o : orders) {
