@@ -85,6 +85,8 @@ public class DBI {
 
     public void addMessage(String username, Message message) {
         db.addMessage(username, message);
+        // if adding OK?
+        setHasUnsentMessages(username, true);
     }
 
     public ArrayList<Message> getMessages(String username) {
